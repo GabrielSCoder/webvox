@@ -7,6 +7,9 @@ const Login : React.LazyExoticComponent<any> = lazy(() => import("../pages/Login
 const Sobre : React.LazyExoticComponent<any> = lazy(() => import("../pages/Sobre"))
 const SobreMim : React.LazyExoticComponent<any> = lazy(() => import("../pages/SobreMim"))
 const Tecnologias : React.LazyExoticComponent<any> = lazy(() => import("../pages/Tecnologias"))
+const Privacidade : React.LazyExoticComponent<any> = lazy(() => import("../pages/Privacidade"))
+const Versao : React.LazyExoticComponent<any> = lazy(() => import("../pages/Versao"))
+const UsoCookies : React.LazyExoticComponent<any> = lazy(() => import("../pages/UsoCookies"))
 
 const PreventLoginRoute = () => {
     // const isAuthenticated = window.localStorage.getItem("content") === "true";
@@ -31,7 +34,10 @@ export default function MainRouter() {
                         { path: "", element: <Login /> },
                         {path: "sobre", element: <Sobre />},
                         {path : "tecnologias", element : <Tecnologias />},
-                        {path : "sobremim", element : <SobreMim />}
+                        {path : "sobremim", element : <SobreMim />},
+                        {path : "usocookies", element : <UsoCookies />},
+                        {path : "privacidade", element : <Privacidade />},
+                        {path : "versao", element : <Versao />},
                     ]
                 }
             ]
