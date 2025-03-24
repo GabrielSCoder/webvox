@@ -9,6 +9,7 @@ import LoadingPageTemplate from "../templates/LoadingPage";
 import classNames from "../utils/classNames";
 import HorizontalMenu from "../templates/HorizontalMenu";
 import { ctx } from "../contexts/NotifyContext";
+import ReportModal from "../templates/ReportModal";
 
 export default function FeedLayout() {
 
@@ -16,6 +17,7 @@ export default function FeedLayout() {
 
     const [UserData, setUserData] = useState<any>([])
     const [menuopen, setMenuOpen] = useState(false)
+    const [reportModal, setReportModal] = useState(false)
     const {notify, func} = useContext(ctx)
 
     const getData = async () => {
@@ -48,7 +50,7 @@ export default function FeedLayout() {
 
                 <div className={classNames("hidden sticky top-1 w-[250px] lg:flex lg:flex-col gap-10 px-2 overflow-auto h-[910px] ", tipo_usuario == "conta" ? "xl:h-[99vh] lg:h-[99vh]" : "lg:h-[800px]")}>
                     <TitleTag.Main className="text-left px-2">Webvox</TitleTag.Main>
-                    <LateralMenu username={UserData.username} id={UserData.id} notificationsNumber={notify} />
+                    <LateralMenu username={UserData.username} id={UserData.id} notificationsNumber={notify} setState={setReportModal}/>
                     {/* {tipo_usuario == "conta" && <p className="text-xl text-black dark:text-white text-center mt-6">Olá! {UserData.username}</p>} */}
                     {/* <DarkModeButton className="w-fit mx-auto py-2 px-4 rounded-3xl"/> */}
                     {tipo_usuario == "conta" && <button className="px-4 py-2 rounded-3xl text-black dark:text-white border hover:bg-gray-800 w-fit mt-auto mb-2" onClick={handleLogout}>Logout</button>}
@@ -59,13 +61,13 @@ export default function FeedLayout() {
                         {!UserData.img_url ? <div className="w-full h-full rounded-full bg-red-500 m-2"></div> : <img src={UserData.img_url} className="h-full w-full rounded-full object-cover"></img>}
                     </div>
                     <h2 className="text-center text-xl text-white ml-[130px] md:mx-auto">WebVox</h2>
-                    <div className={classNames("absolute top-14 left-0 lg:hidden", !menuopen ? "hidden" : "")}>
-                        <div className="absolute top-0 left-0 z-20 px-2">
+                    <div className={classNames("bg-black absolute top-12 left-0 lg:hidden h-[80dvh] flex flex-col gap-10 py-4", !menuopen ? "hidden" : "")}>
+                        <div className="z-20 px-2">
                             <SearchBarTemplate />
                         </div>
-                        <LateralMenu username={UserData.username} id={UserData.id} notificationsNumber={notify}
-                            className={classNames("h-[350px] bg-black justify-center relative ")} />
-                        <button className="absolute top-[300px] left-10 px-4 py-2 rounded-3xl text-black dark:text-white border hover:bg-gray-800 w-fit mb-2" onClick={handleLogout}>Logout</button>
+                        <LateralMenu username={UserData.username} id={UserData.id} notificationsNumber={notify} setState={setReportModal}
+                            className={classNames("h-[350px] justify-center relative")} />
+                        <button className="left-10 px-4 py-2 rounded-3xl text-black dark:text-white border hover:bg-gray-800 w-fit mb-2 mx-auto" onClick={handleLogout}>Logout</button>
                     </div>
 
                 </div>
@@ -96,6 +98,7 @@ export default function FeedLayout() {
 
             </div>
             {tipo_usuario == "convidado" ? <GuestFooterAdvice /> : ""}
+            <ReportModal state={reportModal} setState={setReportModal}/>
         </div>
 
     )

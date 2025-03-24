@@ -11,7 +11,7 @@ import ForgotPasword from "../ForgotPassword";
 import { AuthProvider } from "../../hooks/useAuth";
 import { getOSAndBrowser} from "../../services/soinformation"
 import { getFingerPrint } from "../../services/fingerprint";
-const contentStyle = "p-2 lg:p-8 px-10 lg:px-36 fixed left-1/2 top-1/2 h-[68vh] max-h-[100vh] w-[400px] lg:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow"
+const contentStyle = "p-2 lg:p-8 px-10 lg:px-36 fixed left-1/2 top-1/2 h-[70dvh] max-h-[100vh] w-[400px] lg:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow"
 
 export default function LoginModal(props: modalProps) {
 

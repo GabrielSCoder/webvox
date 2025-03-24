@@ -1,25 +1,24 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import Card from "../../components/Card";
-import { useState } from "react";
-import FixedInput from "../Inputs/FixedLenghtInputs";
-import TitleTag from "../../components/TitleTags";
+import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { editUser } from "../../services/user";
 import LoadingItemTemplate from "../LoadingItem";
-const contentStyle = "p-2 lg:p-8 px-10 lg:px-24 fixed left-1/2 top-1/2 max-h-[100vh] w-[400px] md:w-[500px] lg:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow"
+import { EditModal } from "./modal";
+const contentStyle = "p-2 lg:p-8 px-10 lg:px-24 fixed left-1/2 top-1/2 max-h-[100vh] min-h-[70dvh] h-[80dvh] w-[400px] md:w-[500px] lg:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow"
 
 type props = {
     state: boolean
     setState: any
     data: any
-    userFunc : any
+    userFunc: any
 }
 
 export default function ProfileEditModal(props: props) {
 
     const { setState, state, data, userFunc } = props
     const [loading, setLoading] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(true)
     const { register, reset, handleSubmit, control } = useForm({
         defaultValues: {
             nome: data.nome,
@@ -29,7 +28,7 @@ export default function ProfileEditModal(props: props) {
         }
     })
 
-  
+
 
     const persistData = handleSubmit(async (formdata) => {
 
@@ -43,43 +42,25 @@ export default function ProfileEditModal(props: props) {
             nome: formdata.nome
         }
 
-        await editUser(sendData)      
+        await editUser(sendData)
     })
 
     const delay = async () => {
-      
+
         const dl = new Promise(resolve => setTimeout(resolve, 2000))
         await Promise.all([dl, persistData()])
         userFunc()
         setState(false)
     }
 
-    const Content = () => {
+    const nome = useWatch({ control, name: "nome" });
+    const bio = useWatch({ control, name: "bio" });
+    const background = useWatch({ control, name: "background" });
+    const avatar = useWatch({ control, name: "avatar" });
 
-        return (
-            <>
-                <TitleTag.Sub className="text-white absolute top-4 left-20">Edit Profile</TitleTag.Sub>
-
-                <Card className="flex-col h-full w-full my-20">
-
-                    <Card className="flex-col gap-10 ">
-                        <FixedInput.InputText maxLenght={200} name="background" placeholder="Url da Imagem de fundo" register={register} value={data.background_url ?? ""} useWatch={useWatch} control={control} />
-                        <FixedInput.InputText maxLenght={200} name="avatar" placeholder="Url da Imagem de perfil" register={register} value={data.img_url ?? ""} useWatch={useWatch} control={control} />
-                        <FixedInput.TextArea maxLenght={70} name="bio" placeholder="bio" register={register} value={data.texto_bio ?? ""} useWatch={useWatch} control={control} />
-                        <FixedInput.InputText key={"nome"} maxLenght={50} name="nome" placeholder="nome" register={register} useWatch={useWatch} control={control} required />
-                    </Card>
-
-                </Card>
-
-                <input type="button" className="absolute top-4 right-4 text-white dark:text-black dark:bg-white bg-black rounded-3xl py-0 px-4 font-semibold text-lg hover:bg-slate-200"
-                    value="Salvar" onClick={delay} />
-
-            </>
-
-        )
-    }
-
-
+    useEffect(() => {
+        setIsDisabled(nome.trim() !== "" && bio.trim() !== "" && background.trim() !== "" && avatar.trim() !== "");
+    }, [nome, bio, background, avatar]);
 
     return (
 
@@ -92,12 +73,12 @@ export default function ProfileEditModal(props: props) {
                 >
                     <Dialog.Title></Dialog.Title>
 
-                    {loading ? <LoadingItemTemplate /> : <Content />}
+                    {loading ? <LoadingItemTemplate /> : <EditModal control={control} data={data} handleFunction={delay} register={register} useWatch={useWatch} isDisabled={isDisabled} />}
 
                     <Dialog.Close asChild >
                         <button
                             className="absolute left-2.5 top-4 inline-flex size-[26px] appearance-none items-center justify-center rounded-full text-white hover:bg-custom-bg-x hover:bg-violet4 focus:shadow-[0_0_0_2px] focus:shadow-violet7 focus:outline-none"
-                            aria-label="Close" onClick={() => reset()}
+                            aria-label="Close" onClick={() => reset()} disabled={loading}
                         >
                             <Cross2Icon />
                         </button>
