@@ -31,10 +31,13 @@ export default function useProfileMang() {
             if (resp.dados != ProfileData) {
                 setProfileData(resp.dados)
                 setUserId(userData.id)
-                console.log(userId)
+         
                 await verifyUserXYithY({ follower_id: userData.id, following_id: resp.dados.id })
                 await getPostsData(resp.dados.id, userData.id)
-                await Totalizer(resp.dados.id, userData.id)
+                await Totalizer({
+                    follower_id: -1, profileId: resp.dados.id,
+                    following_id: -1
+                }, userData.id)
             }
         } else {
             setInx(true)
@@ -125,21 +128,21 @@ export default function useProfileMang() {
     }
 
     //Recebe o id para pesquisa dos seguindo e seguidores e verifica se recebe o id do usuario logado e se são iguais, se não, ele retornar a lista do id em comparação com o usuario
-    async function Totalizer(id: number, loggedUsedId?: number) {
+    async function Totalizer(data : followForm, loggedUsedId?: number) {
 
-        const resp = await getTotalizerF(id)
+        const resp = await getTotalizerF(data.follower_id == -1  ? data.profileId : data.following_id)
 
+    
         if (resp) {
             setFollowers(resp.data.dados.TotalFollowers)
             setFollowing(resp.data.dados.TotalFollowings)
 
-            if (loggedUsedId && id == loggedUsedId) {
-                await getFollowers(id)
-                await getFollowing(id)
-            } else if (loggedUsedId) {
-
-                await getCompareFollowers({ compare_id: loggedUsedId, user_id: id })
-                await getCompareFollowing({ compare_id: loggedUsedId, user_id: id })
+            if (data.follower_id == -1) {
+                await getFollowers(data.profileId)
+                await getFollowing(data.profileId)
+            } else if (loggedUsedId && typeof data.profileId == "number") {
+                await getCompareFollowers({ compare_id: loggedUsedId, user_id: data.profileId })
+                await getCompareFollowing({ compare_id: loggedUsedId, user_id: data.profileId })
             } else {
                 console.log("3")
             }
@@ -147,21 +150,6 @@ export default function useProfileMang() {
         }
     }
 
-    // async function TotalizerByResponse(id: number, loggedUsedId?: number) {
-
-    //     if (loggedUsedId && id == loggedUsedId) {
-
-    //         await getFollowers(id)
-    //         await getFollowing(id)
-    //     } else if (loggedUsedId) {
-
-    //         await getCompareFollowers({ compare_id: loggedUsedId, user_id: id })
-    //         await getCompareFollowing({ compare_id: loggedUsedId, user_id: id })
-    //     } else {
-    //         console.log("3")
-    //     }
-
-    // }
 
     const updateLikes = (data : any, response : any) => {
         setLikesList((prev) =>
@@ -174,102 +162,32 @@ export default function useProfileMang() {
     }
 
 
-    // }
-
-    // const updateRel = (data: any) => {
-
-    //     if (data.dados.profileId == ProfileData?.id) {
-
-    //         if (data.dados.follower_id == userId) {
-    //             relationshipSituation(data.relacao)
-    //         }
-
-    //         setFollowers(data.total.TotalFollowers)
-    //         setFollowing(data.total.TotalFollowings)
-    //     }
-
-    //     if (data.dados.follower_id == userId) {
-
-    //         if (data.dados.invertTotalizer) {  //Normalmente o id do totalizer é do perfil que seguiu, o invert faz com que receba a lista do usuario que foi seguido
-
-    //             TotalizerByResponse(data.dados.profileId, data.dados.follower_id) //Quando estou na lista de seg. de algum profile e quero comparar com os meus 
-    //         } else {
-
-    //             TotalizerByResponse(data.dados.follower_id, data.dados.profileId)
-    //         }
-    //     }
-
-
-
-    // }
-
     const handleFollow = async (data: followForm) => {
-        console.log("follow", data)
+        // console.log("follow", data)
         const resp = await followAsync(data)
-        console.log(resp)
+        if (resp.data.success) {
+            await verifyUserXYithY(data)
+            await Totalizer(data, userId)
+        }
     }
 
     const handleUnfollow = async (data: followForm) => {
-        console.log("unfollow", data)
+        // console.log("unfollow", data)
         const resp = await unfollowAsync(data)
-        console.log(resp)
+        if (resp.data.success) {
+            await verifyUserXYithY(data)
+            await Totalizer(data, userId)
+        }
     }
 
     const handleReaction = async (data: { post_id: number, usuario_id: number, profile_id: number }) => {
-        console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
+        // console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
         const resp = await reactToPost(data)
         if (resp.data.success) {
             updateLikes(data, resp.data.dados.liked)
         }
     }
 
-    // useEffect(() => {
-
-    //     console.log("------------------------------ AQui")
-    //     if (!ProfileData || !ProfileData.id || !userId) return;
-
-    //     console.log("passou")
-
-    //     socket.on("reactResponse", (data) => {
-
-
-    //         console.log("----recebendo resposta de react-----\n")
-    //         console.log(data)
-
-    //         updateLikes(data)
-
-    //     })
-
-    //     socket.on("followResponse", (data) => {
-
-    //         console.log("----recebendo resposta de follow-----\n")
-    //         console.log(data)
-
-    //         updateRel(data)
-    //     })
-
-    //     socket.on("unfollowResponse", (data) => {
-
-    //         console.log("----recebendo respota de unfollow-----\n")
-    //         console.log(data)
-    //         console.log(ProfileData)
-
-    //         updateRel(data)
-    //     })
-
-    //     socket.on("replyResponse", (data) => {
-    //         console.log("reposta de reply\n")
-    //         console.log(data)
-    //     })
-
-    //     return () => {
-    //         socket.off("reactResponse")
-    //         socket.off("followResponse")
-    //         socket.off("unfollowResponse")
-    //         socket.off("replyResponse")
-    //     }
-
-    // }, [ProfileData, userId])
 
     return {
         getFollowers,

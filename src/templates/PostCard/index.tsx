@@ -46,7 +46,7 @@ export default function PostCard(props: cardProps) {
                         {!img_url ? <div className="w-full h-full rounded-full bg-red-500"></div> : <img src={img_url} className="h-full w-full rounded-full object-cover"></img>}
                     </div>
                     <button onClick={btn} className="">
-                        <TitleTag.Sub className="hover:underline hover:decoration-white hover:cursor-pointer"> {user}</TitleTag.Sub>
+                        <TitleTag.Sub className="hover:underline hover:decoration-white hover:cursor-pointer text-base font-normal"> {user}</TitleTag.Sub>
                     </button>
                     <TitleTag.Normal className="text-gray-500">@{username}</TitleTag.Normal>
                     <TitleTag.Normal className="text-gray-500">·  {formatDateTime(data_criacao)}</TitleTag.Normal>

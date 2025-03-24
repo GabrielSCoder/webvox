@@ -13,11 +13,12 @@ type props = {
     state: boolean
     setState: any
     data: any
+    userFunc : any
 }
 
 export default function ProfileEditModal(props: props) {
 
-    const { setState, state, data } = props
+    const { setState, state, data, userFunc } = props
     const [loading, setLoading] = useState(false)
     const { register, reset, handleSubmit, control } = useForm({
         defaultValues: {
@@ -42,20 +43,15 @@ export default function ProfileEditModal(props: props) {
             nome: formdata.nome
         }
 
-        const resp = await editUser(sendData)
-
-        if (resp.data.success) {
-            location.reload()
-        }
-        
-      
+        await editUser(sendData)      
     })
 
     const delay = async () => {
       
         const dl = new Promise(resolve => setTimeout(resolve, 2000))
         await Promise.all([dl, persistData()])
-        setLoading(false)
+        userFunc()
+        setState(false)
     }
 
     const Content = () => {

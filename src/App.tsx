@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import MainRouter from './router';
 import { getIPAddress } from './services/soinformation';
 import { generateHMAC2 } from './services/crypto';
+import NotifyProvider from './contexts/NotifyContext';
 const key = import.meta.env.VITE_SECRET_KEY
 
 
@@ -46,7 +47,9 @@ function App() {
   }, [])
 
   return (
-    <MainRouter />
+    <NotifyProvider>
+      <MainRouter />
+    </NotifyProvider>
   )
 }
 

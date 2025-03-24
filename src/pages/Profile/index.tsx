@@ -85,7 +85,7 @@ export default function ProfilePage() {
                 handleUnfollow={debounceHandlerUnfollow} ProfilePostQTD={ProfilePostQTD} followSituation={followSituation} followers={followers} following={following}
                 handleReaction={debounceHandlerReact} likesList={likesList} setState={setModal} state={modal}
             />
-            <ProfileEditModal setState={setModal} state={modal} data={userData}/>
+            <ProfileEditModal setState={setModal} state={modal} data={userData} userFunc={userrr}/>
         </>
 
     )

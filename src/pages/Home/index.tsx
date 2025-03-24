@@ -57,12 +57,12 @@ export default function Home() {
     }
 
     const handleReaction = async (data: { post_id: number, usuario_id: number, profile_id: number }) => {
-        console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
+        // console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
         const resp = await reactToPost(data)
         if (resp.data.success) {
             updateLikes(data, resp.data.dados.liked)
         }
-        console.log(resp)
+        // console.log(resp)
     }
 
     const debounceReact = (post_id: number, profile_id: number) => {
@@ -100,7 +100,7 @@ export default function Home() {
     }
 
     return (
-        <FeedTemplate feedData={feedData} userData={userData} likesList={likesList} HandleReact={debounceHandlerFollow} />
+        <FeedTemplate feedData={feedData} userData={userData} likesList={likesList} HandleReact={debounceHandlerFollow} getDataWithUser={getDataWithUser} />
     )
 
 }

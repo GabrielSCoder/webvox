@@ -5,7 +5,7 @@ import Instagram from "../../assets/Instagram_icon.png"
 export default function SobreMim() {
 
     return (
-        <div className="h-screen w-full flex flex-col items-center gap-6 relative">
+        <div className="h-full w-full flex flex-col items-center gap-6 relative">
 
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
                 <p className="text-2xl text-white">

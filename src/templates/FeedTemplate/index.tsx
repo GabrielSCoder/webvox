@@ -2,9 +2,9 @@ import FeedList from "../Feed"
 import Card from "../../components/Card"
 import HighlightTextarea from "../CreatePostCardV2"
 
-export default function FeedTemplate(props: { feedData: any, userData: any, likesList: any, HandleReact: any }) {
+export default function FeedTemplate(props: { feedData: any, userData: any, likesList: any, HandleReact: any, getDataWithUser : any }) {
 
-    const { feedData, userData, likesList, HandleReact } = props
+    const { feedData, userData, likesList, HandleReact, getDataWithUser } = props
     const isLogged = localStorage.getItem("profile")
 
     return (
@@ -12,7 +12,7 @@ export default function FeedTemplate(props: { feedData: any, userData: any, like
 
             {isLogged ? (
                 // <CreatePostCard userData={userData}/>
-                <HighlightTextarea userData={userData} />
+                <HighlightTextarea userData={userData} getDataWithUser={getDataWithUser} />
             ) : ""}
 
             <div className=" border-b w-full"></div>

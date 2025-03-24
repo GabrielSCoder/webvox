@@ -3,7 +3,11 @@ export default function ProfileWallpaper({backgroundUrl} : {backgroundUrl : stri
     return (
         <>
             <div className="w-full">
-                <img src={backgroundUrl} className="object-cover h-[200px] w-full z-0 aspect-3/2" />
+                {backgroundUrl ? (
+                    <img src={backgroundUrl} className="object-cover h-[200px] w-full z-0 aspect-3/2" />
+                ): (
+                    <div className="bg-white object-cover h-[200px] w-full z-0 aspect-3/2" />
+                )}
             </div>
         </>
     )

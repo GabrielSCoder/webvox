@@ -28,8 +28,6 @@ export default function ProfileCard(props: cardProps) {
     const nav = useNavigate()
 
     const location = useLocation()
-
-    console.log(followSituation)
     
     const FollowBtn = () => {
 
@@ -57,7 +55,7 @@ export default function ProfileCard(props: cardProps) {
 
             <Card className="relative flex-col w-full justify-start items-start pb-6 border-b">
 
-                <ProfileWallpaper backgroundUrl={profileData.background_url ?? ""} />
+                <ProfileWallpaper backgroundUrl={profileData.background_url} />
 
                 <div className="w-full flex justify-end mt-2 px-2 h-[44px]">
                     <FollowBtn />

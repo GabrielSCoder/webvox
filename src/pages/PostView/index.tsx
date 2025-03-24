@@ -83,7 +83,7 @@ export default function Postview(props: props) {
         const resp = await sendPostAsync(dt)
         if (resp.data.success) {
             reset()
-            console.log("reply", ({ usuario_id: userData.id, usuario_destino: profileData.id, post_id: resp.data.dados.parent_id }))
+            // console.log("reply", ({ usuario_id: userData.id, usuario_destino: profileData.id, post_id: resp.data.dados.parent_id }))
             getPostData()
         }
 
@@ -91,7 +91,7 @@ export default function Postview(props: props) {
     }
 
     const updateLikes = (data: any, response: any) => {
-        console.log(data, response)
+        // console.log(data, response)
 
         setPostData((prev) => (prev ? {
             ...prev, liked: response, total_reactions: response == true ? prev.total_reactions + 1 : prev.total_reactions - 1
@@ -111,21 +111,21 @@ export default function Postview(props: props) {
     }
 
     const handleReaction = async (data: { post_id: number, usuario_id: number, profile_id: number }) => {
-        console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
+        // console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
         const resp = await reactToPost(data)
         if (resp.data.success) {
             updateLikes(data, resp.data.dados.liked)
         }
-        console.log(resp)
+        // console.log(resp)
     }
 
     const handleReactionPosts = async (data: { post_id: number, usuario_id: number, profile_id: number }) => {
-        console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
+        // console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
         const resp = await reactToPost(data)
         if (resp.data.success) {
             updatePostLikes(data, resp.data.dados.liked)
         }
-        console.log(resp)
+        // console.log(resp)
     }
 
     const debounceReact = (data: any) => {
@@ -193,7 +193,7 @@ export default function Postview(props: props) {
             </div>
 
             {loadingReply ? (
-                <LoadingPageTemplate />
+                <LoadingPageTemplate className="my-6"/>
             ) : userData.id ? (
                 <ReplyCardTemplate profileData={profileData} userData={userData} postData={postData} handleReply={handlePost} register={register} />
             ) : ""

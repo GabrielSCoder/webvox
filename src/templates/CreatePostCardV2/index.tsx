@@ -9,9 +9,11 @@ import TitleTag from "../../components/TitleTags";
 import { sendPostAsync } from "../../services/post";
 import LoadingPageTemplate from "../LoadingPage";
 import classNames from "../../utils/classNames";
+import { useNavigate } from "react-router-dom";
 
 type props = {
     userData: any
+    getDataWithUser : any
 }
 
 export default function HighlightTextarea(props: props) {
@@ -24,7 +26,7 @@ export default function HighlightTextarea(props: props) {
     const [txt, setTxt] = useState("");
     const [val, setVal] = useState(0)
     const charactersLimit = 150
-    const { userData } = props
+    const { userData, getDataWithUser } = props
     
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -145,7 +147,7 @@ export default function HighlightTextarea(props: props) {
         setLoading(true)
         const delay = new Promise(resolve => setTimeout(resolve, 2000))
         await Promise.all([delay, handlePost()])
-        setLoading(false)
+        await getDataWithUser()
     }
 
 

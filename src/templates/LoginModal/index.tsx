@@ -50,7 +50,6 @@ export default function LoginModal(props: modalProps) {
                 clearErrorMsg()
                 nav("/home")
             } else {
-                console.log(resp.msg)
                 setLoading(false)
                 setErrorMsg(resp.msg)
             }

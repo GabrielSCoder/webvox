@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoadingPageTemplate from "../../templates/LoadingPage";
 import { IoIosHeart } from "react-icons/io";
@@ -6,6 +6,7 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { CiChat1 } from "react-icons/ci";
 import useNotifications from "../../hooks/useNotifications";
 import React from "react";
+import { ctx } from "../../contexts/NotifyContext";
 
 export default function Notifications() {
 
@@ -14,6 +15,7 @@ export default function Notifications() {
     const user = location.state.username;
     const nav = useNavigate()
     const { notifyData, loading, getData, confirmNotify } = useNotifications()
+    const { setNotifications } = useContext(ctx)
 
     const btn = (event: React.MouseEvent, username: string) => {
         event.stopPropagation()
@@ -26,7 +28,10 @@ export default function Notifications() {
 
     useEffect(() => {
         const confirm = async () => {
-            await confirmNotify(true, id)
+            const resp = await confirmNotify(true, id)
+            if (resp.data.success) {
+                setNotifications(0)
+            }
         }
 
         confirm()
