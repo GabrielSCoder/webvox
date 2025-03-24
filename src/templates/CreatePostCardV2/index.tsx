@@ -9,7 +9,6 @@ import TitleTag from "../../components/TitleTags";
 import { sendPostAsync } from "../../services/post";
 import LoadingPageTemplate from "../LoadingPage";
 import classNames from "../../utils/classNames";
-import { useNavigate } from "react-router-dom";
 
 type props = {
     userData: any
