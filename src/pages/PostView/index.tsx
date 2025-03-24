@@ -90,7 +90,7 @@ export default function Postview(props: props) {
         setLoadingReply(false)
     }
 
-    const updateLikes = (data: any, response: any) => {
+    const updateLikes = (response: any) => {
         // console.log(data, response)
 
         setPostData((prev) => (prev ? {
@@ -114,7 +114,7 @@ export default function Postview(props: props) {
         // console.log("react", { post_id: data.post_id, usuario_id: data.usuario_id, profile_id: data.profile_id })
         const resp = await reactToPost(data)
         if (resp.data.success) {
-            updateLikes(data, resp.data.dados.liked)
+            updateLikes(resp.data.dados.liked)
         }
         // console.log(resp)
     }
