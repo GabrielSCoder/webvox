@@ -11,7 +11,9 @@ import { signup, verifyEmail, verifyPassword, verifyUsername } from "../../servi
 import EtapaConclusao from "./EtapaConclusao";
 import CadastroConcluido from "./CadastroConcluido";
 
-const contentStyle = "p-2 lg:p-8 px-10 lg:px-36 fixed left-1/2 top-1/2 max-h-[100vh] w-[400px] md:w-[500px] lg:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow"
+const contentStyle = "md:p-12 lg:px-32 fixed left-1/2 top-1/2 h-[80dvh] lg:h-[700px] xl:h-[700px] max-h-[100vh] w-[90dvw] md:w-[500px] lg:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow overflow-hidden";
+
+const innerContentStyle = "h-full max-h-full overflow-y-auto";
 
 export default function SignupModalTemplate(props: modalProps) {
 
@@ -216,8 +218,8 @@ export default function SignupModalTemplate(props: modalProps) {
         )
     }
 
-    const closeBTN = (event : any) => {
-       
+    const closeBTN = (event: any) => {
+
         if (cadastroConcluido) {
             event.preventDefault()
             stateMng(!state)
@@ -230,11 +232,11 @@ export default function SignupModalTemplate(props: modalProps) {
 
         return (
             <>
-                <Dialog.Title className="mt-8 text-[30px] font-medium text-mauve12 dark:text-white text-start">
+                <Dialog.Title className="mt-2 md:mt-0 xl:mt-2 text-[30px] font-medium text-mauve12 dark:text-white text-start">
                     Criar sua conta
                 </Dialog.Title>
 
-                <div className="mt-8 flex flex-col justify-center items-center gap-8">
+                <div className="mt-8 md:mt-2 xl:mt-6 flex flex-col justify-center items-center gap-8">
 
                     {!loading && !etapaUm && <SignupModalEtapaUm register={register} control={control} errors={errors} manageF={manageEtapa} validEmail={validEmail} etapaUmCompleta={etapaUmCompleta} loadingVerify={loadingVerify} />}
                     {!loading && etapaUm && !etapaDois && <SignupModalEtapaDois register={register} control={control} errors={errors} validPassword={validPassword} validUsername={validUsername} etapaDoisCompleta={etapaDoisCompleta} manageF={manageEtapa} loadingVerify={loadingVerify} />}
@@ -255,7 +257,9 @@ export default function SignupModalTemplate(props: modalProps) {
                     className={contentStyle}
                     onPointerDownOutside={(e) => e.preventDefault()}>
 
-                    {cadastroConcluido ? CC() : loading ? loadContent() : content()}
+                    <div className={innerContentStyle}>
+                        {cadastroConcluido ? CC() : loading ? loadContent() : content()}
+                    </div>
 
                     <Dialog.Close asChild onClick={closeBTN}>
                         <button

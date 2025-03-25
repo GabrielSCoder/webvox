@@ -46,10 +46,10 @@ function LateralMenu(props: props) {
             </div>
         )
         list[3] = (
-            <div key={2} className=" relative flex items-center rounded-3xl hover:bg-gray-200 hover:dark:bg-gray-800 w-fit px-2">
+            <div key={3} className=" relative flex items-center rounded-3xl hover:bg-gray-200 hover:dark:bg-gray-800 w-fit px-2">
                 {notificationsNumber > 0 && <div className="flex justify-center items-center rounded-full bg-sky-500 absolute top-0 left-3 text-white text-xs text-center w-[22px] h-[22px]"><p className="p-1">{notificationsNumber}</p></div>}
                 <MdOutlineReport className="text-white" size={25}  />
-                <button key={2} className="text-xl font-semibold text-black dark:text-white px-6 py-2" onClick={() => setState(true)}>Reportar</button>
+                <button key={3} className="text-xl font-semibold text-black dark:text-white px-6 py-2" onClick={() => setState(true)}>Reportar</button>
             </div>
         )
         return list

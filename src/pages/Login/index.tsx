@@ -13,7 +13,7 @@ export default function Login() {
     }
 
     return (
-        <>
+        <div className="">
             <div className="flex flex-col justify-center items-center lg:items-start lg:justify-start md:h-fit">
                 <h1 className="text-3xl md:text-6xl font-semibold dark:text-white text-black font-serif">Conheça o mundo</h1>
                 <h2 className="text-xl md:text-3xl font-semibold font-serif mt-16 dark:text-white text-black">Inscreva-se hoje</h2>
@@ -27,7 +27,7 @@ export default function Login() {
            
             <LoginModalTemplate state={loginModal} stateMng={setLoginModal} title="Teste" cancelText="Cancelar" confirmText="Confirmar" alertType="success" changeModals={changeM}><></></LoginModalTemplate>
             <SignupModalTemplate state={cadastroModal} stateMng={setCadastroModal} title="teste2" cancelText="Cancelar" confirmText="Confirmar" alertType="success"><></></SignupModalTemplate>
-        </>
+        </div>
 
 
 

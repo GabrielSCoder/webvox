@@ -7,7 +7,8 @@ import { Content } from "./modal"
 import { postReportAsync } from "../../services/report"
 
 
-const contentStyle = "p-2 lg:p-8 px-10 lg:px-24 fixed left-1/2 top-1/2 max-h-[100vh] min-h-[70dvh] h-[80dvh] w-[400px] md:w-[500px] lg:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow z-50"
+const contentStyle = "p-2 lg:p-8 px-6 lg:px-24 fixed left-1/2 top-1/2 max-h-[100vh] min-h-[70dvh] h-[80dvh] w-[90dvw] md:w-[500px] lg:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-black p-[25px] shadow-[var(--shadow-6)] focus:outline-none data-[state=open]:animate-contentShow z-50"
+
 
 type props = {
     state: boolean
@@ -85,12 +86,14 @@ export default function ReportModal(props: props) {
                 >
                     <Dialog.Title></Dialog.Title>
 
-                    {loading ? <IsLoading /> : conclusao ? <Concluido /> : <Content register={register} control={control} useWatch={useWatch} isDisabled={dis} handleFunction={delay} />}
+                    <div className="overflow-y-auto h-full max-h-full">
+                        {loading ? <IsLoading /> : conclusao ? <Concluido /> : <Content register={register} control={control} useWatch={useWatch} isDisabled={dis} handleFunction={delay} />}
+                    </div>
 
                     <Dialog.Close asChild >
                         <button
                             className="absolute left-2.5 top-4 inline-flex size-[26px] appearance-none items-center justify-center rounded-full text-white hover:bg-custom-bg-x hover:bg-violet4 focus:shadow-[0_0_0_2px] focus:shadow-violet7 focus:outline-none"
-                            aria-label="Close" onClick={() => {reset(); setConclusao(false)}} disabled={loading}
+                            aria-label="Close" onClick={() => { reset(); setConclusao(false) }} disabled={loading}
                         >
                             <Cross2Icon />
                         </button>

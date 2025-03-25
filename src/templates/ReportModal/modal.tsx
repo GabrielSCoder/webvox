@@ -7,7 +7,7 @@ type props = {
     control: any
     useWatch: any
     isDisabled: boolean
-    handleFunction : Function
+    handleFunction: Function
 }
 
 export function Content(props: props) {
@@ -18,9 +18,9 @@ export function Content(props: props) {
         <Card className="flex flex-col">
             <TitleTag.Sub className="text-white absolute top-4 left-20">Reportar problema</TitleTag.Sub>
 
-            <Card className="flex-col h-full w-full my-20">
+            <Card className="flex-col h-full w-full my-6 xl:my-10 lg:my-20">
 
-                <Card className="flex-col gap-10 ">
+                <Card className="flex-col gap-10">
                     <FixedInput.InputText maxLenght={20} name="titulo" placeholder="Título" register={register} innerPlaceholder="Título" value={""}
                         useWatch={useWatch} control={control} required />
                     <FixedInput.InputText maxLenght={20} name="nome" placeholder="Seu nome (não obrigatório)" innerPlaceholder="Nome" register={register}
@@ -35,8 +35,9 @@ export function Content(props: props) {
             </Card>
 
             <input type="button"
-             className="absolute top-4 right-4 text-white dark:text-black dark:bg-white bg-black rounded-3xl py-0 px-4 font-semibold text-lg hover:bg-slate-200 disabled:bg-gray-600"
-                value="Salvar" onClick={() => handleFunction()} disabled={!isDisabled} />
+                className="lg:absolute lg:top-4 lg:right-4 text-white dark:text-black dark:bg-white bg-black rounded-3xl py-0 px-4 font-semibold text-lg hover:bg-slate-200 disabled:bg-gray-600"
+                value="Salvar" onClick={() => handleFunction()} disabled={!isDisabled}
+            />
 
         </Card>
 
